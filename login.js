@@ -43,3 +43,9 @@ router.use(require('express-session')({
 
 router.use(passport.initialize());
 router.use(passport.session());
+
+router.get('/login', function (req, res) {
+	res.render('login');
+});
+
+exports.routes = router;
