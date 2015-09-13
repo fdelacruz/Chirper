@@ -79,4 +79,26 @@ router.get('/logout', function (req, res) {
 	res.redirect('/login');
 });
 
+function loginRequired(req, res, next) {
+	if (req.isAuthenticated()) {
+		next();
+	} else {
+		res.redirect('/login');
+	}
+}
+
+function makeUserSafe(user) {
+	var safeUser = {};
+
+	var safeKeys = ['cid', 'fullname', 'email', 'username', 'following'];
+
+	safeKeys.forEach(function (key) {
+		safeUser[key] = user[key];
+	});
+
+	return safeUser;
+}
+
 exports.routes = router;
+exports.required = loginRequired;
+exports.safe = makeUserSafe;
