@@ -48,4 +48,35 @@ router.get('/login', function (req, res) {
 	res.render('login');
 });
 
+router.post('/signup', function (req, res, next) {
+	if (users.where({ username: req.body.username }).items.length === 0) {
+		var user = {
+			fullname: req.body.fullname,
+			email: req.body.email,
+			username: req.body.username,
+			passwordHash: hash(req.body.password),
+			following: []
+		};
+
+		var userId = users.insert(user);
+
+		req.login(users.get(userId), function (err) {
+			if (err) return next(err);
+			res.redirect('/');
+		});
+	} else {
+		res.redirect('/login');
+	}
+});
+
+router.post('/login', passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/login'
+}));
+
+router.get('/logout', function (req, res) {
+	req.logout();
+	res.redirect('/login');
+});
+
 exports.routes = router;
