@@ -10,6 +10,7 @@ var storeMethods = {
 		arr.filter(function (item) {
 			return currIds.indexOf(item.cid) === -1;
 		}).forEach(this.add.bind(this));
+
 	},
 	add: function (item) {
 		this._data.push(item);
