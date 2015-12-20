@@ -5,7 +5,7 @@ var UserStore = require('../stores/users');
 var FollowButton = module.exports = React.createClass({
 	getInitialState: function () {
 		return {
-			id: UserStore.currentUser.id,
+			id: UserStore.currentUser.cid,
 			currentlyFollowing: UserStore.currentUser.following
 		};
 	},
